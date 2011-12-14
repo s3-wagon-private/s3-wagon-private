@@ -9,7 +9,7 @@ usable in other contexts by deploying to repositories at "s3p://" URLs.
 The one quirk is that you must either install it as a user-level
 plugin or set `:disable-deps-clean true` in project.clj, since
 fetching deps makes Leiningen delete this jar out of the `lib/dev`
-directory, which confuses Plexus.
+directory, which confuses Plexus. This will be fixed in Leiningen 2.0.
 
 In project.clj:
 
@@ -26,7 +26,7 @@ You should keep your S3 credentials in `~/.lein/init.clj`:
 (def leiningen-auth {"s3p://mybucket/releases/"
                      {:username "ACCESS_KEY"
                       :passphrase "SECRET_KEY"}
-                     "s3p://mybucket/snapshots"
+                     "s3p://mybucket/snapshots/"
                      {:username "ACCESS_KEY"
                       :passphrase "SECRET_KEY"}})
 ```
