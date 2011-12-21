@@ -1,8 +1,9 @@
 # s3-wagon-private
 
-Deploy artifacts to private S3 repositories. Designed to be used from
-[Leiningen](https://github.com/technomancy/leiningen), but should be
-usable in other contexts by deploying to repositories at "s3p://" URLs.
+Deploy and consume artifacts in private S3 repositories. Designed to
+be used from [Leiningen](https://github.com/technomancy/leiningen),
+but should be usable in other contexts by deploying to repositories at
+"s3p://" URLs.
 
 ## Usage
 
@@ -18,6 +19,18 @@ Add the repositories listing to `project.clj`:
 ```clj
 :repositories {"releases" "s3p://mybucket/releases/"
                "snapshots" "s3p://mybucket/snapshots/"}
+```
+
+Future versions of Leiningen will allow you to declare the plugin
+dependency in `project.clj`, but for the time being you may want to
+include this warning at the bottom of `project.clj` so you will get
+more helpful error messages when it's missing:
+
+```clj
+(try (resolve 's3.wagon.private.PrivateWagon)
+     (catch java.lang.ClassNotFoundException _
+       (println "WARNING: You appear to be missing s3-private-wagon.")
+       (println "To install it: lein plugin install s3-private-wagon 1.0.0")))
 ```
 
 You should keep your S3 credentials in `~/.lein/init.clj`:
