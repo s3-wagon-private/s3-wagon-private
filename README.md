@@ -6,16 +6,16 @@ usable in other contexts by deploying to repositories at "s3p://" URLs.
 
 ## Usage
 
-The one quirk is that you must either install it as a user-level
-plugin or set `:disable-deps-clean true` in project.clj, since
-fetching deps makes Leiningen delete this jar out of the `lib/dev`
-directory, which confuses Plexus. This will be fixed in Leiningen 2.0.
+If you're using this from Leiningen 1.6.2 or older, there are some
+bootstrapping issues that prevent this from being usable in
+`:dev-dependencies`. For the time being it must be installed as a
+user-level plugin:
 
-In project.clj:
+    $ lein plugin install s3-wagon-private 1.0.0
+
+Add the repositories listing to `project.clj`:
 
 ```clj
-:disable-implicit-clean true
-:dev-dependencies [[s3-wagon-private "1.0.0"]]
 :repositories {"releases" "s3p://mybucket/releases/"
                "snapshots" "s3p://mybucket/snapshots/"}
 ```
