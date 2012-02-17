@@ -7,31 +7,20 @@ but should be usable in other contexts by deploying to repositories at
 
 ## Usage
 
-If you're using this from Leiningen 1.6.2 or older, there are some
-bootstrapping issues that prevent this from being usable in
-`:dev-dependencies`. For the time being it must be installed as a
-user-level plugin:
+### Leiningen
 
-    $ lein plugin install s3-wagon-private 1.0.0
-
-Add the repositories listing to `project.clj`:
+Add the plugin and repositories listing to `project.clj`:
 
 ```clj
+:plugins [[s3-wagon-private "1.1"]]
 :repositories {"releases" "s3p://mybucket/releases/"
                "snapshots" "s3p://mybucket/snapshots/"}
 ```
 
-Future versions of Leiningen will allow you to declare the plugin
-dependency in `project.clj`, but for the time being you may want to
-include this warning at the bottom of `project.clj` so you will get
-more helpful error messages when it's missing:
+Versions of Leiningen prior to 1.7.0 don't support `:plugins` in
+project.clj; you will need to install by hand:
 
-```clj
-(try (resolve 's3.wagon.private.PrivateWagon)
-     (catch java.lang.ClassNotFoundException _
-       (println "WARNING: You appear to be missing s3-private-wagon.")
-       (println "To install it: lein plugin install s3-private-wagon 1.0.0")))
-```
+    $ lein plugin install s3-wagon-private 1.1
 
 You should keep your S3 credentials in `~/.lein/init.clj`:
 
@@ -52,9 +41,9 @@ but is harmless.
 
 ## License
 
-Copyright (C) 2011 Phil Hagelberg
+Copyright © 2011-2012 Phil Hagelberg and Scott Clasen
 
 Based on [aws-maven](http://git.springsource.org/spring-build/aws-maven)
 from the Spring project.
 
-Distributed under the Eclipse Public License, the same as Clojure.
+Distributed under the Apache Public License version 2.0.
