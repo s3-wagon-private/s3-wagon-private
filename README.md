@@ -12,7 +12,7 @@ but should be usable in other contexts by deploying to repositories at
 Add the plugin and repositories listing to `project.clj`:
 
 ```clj
-:plugins [[s3-wagon-private "1.1"]]
+:plugins [[s3-wagon-private "1.1.1"]]
 :repositories {"releases" "s3p://mybucket/releases/"
                "snapshots" "s3p://mybucket/snapshots/"}
 ```
@@ -20,7 +20,7 @@ Add the plugin and repositories listing to `project.clj`:
 Versions of Leiningen prior to 1.7.0 don't support `:plugins` in
 project.clj; you will need to install by hand:
 
-    $ lein plugin install s3-wagon-private 1.1
+    $ lein plugin install s3-wagon-private 1.1.1
 
 You should keep your S3 credentials in `~/.lein/init.clj`:
 
