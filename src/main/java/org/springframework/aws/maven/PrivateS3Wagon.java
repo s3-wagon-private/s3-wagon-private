@@ -88,7 +88,7 @@ public class PrivateS3Wagon extends SimpleStorageServiceWagon {
     @Override
     protected void putResource(File source, String destination, TransferProgress progress) throws S3ServiceException, IOException {
         buildDestinationPath(getDestinationPath(destination));
-        S3Object object = new S3Object(this.bucket + destination);
+        S3Object object = new S3Object(this.basedir + destination);
         object.setAcl(AccessControlList.REST_CANNED_PRIVATE);
         object.setDataInputFile(source);
         object.setContentLength(source.length());
