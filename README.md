@@ -39,6 +39,71 @@ exist will cause an `org.jets3t.service.S3ServiceException` stack
 trace to be emitted; this is a bug in one of the underlying libraries
 but is harmless.
 
+###Maven 
+
+####pom.xml
+
+```xml
+     <build>
+        <extensions>
+            <extension>
+                <groupId>s3-wagon-private</groupId>
+                <artifactId>s3-wagon-private</artifactId>
+                <version>1.1.1</version>
+            </extension>
+        </extensions>
+    </build>
+    
+    <!-- to publish to a private bucket -->
+    
+     <distributionManagement>
+                <repository>
+                    <id>someId</id>
+                    <name>Some Name</name>
+                    <url>s3p://some-bucket/release</url>
+                </repository>
+                <snapshotRepository>
+                    <id>someSnapshotId</id>
+                    <name>Some Snapshot Name</name>
+                    <url>s3p://some-bucket/snapshot</url>
+                </snapshotRepository>
+     </distributionManagement>
+     
+     <!-- to consume artifacts from a private bucket -->
+     
+     <repositories>
+        <repository>
+            <id>someId</id>
+            <name>Some Name</name>
+            <url>s3p://some-bucket/release</url>
+        </repository>
+    </repositories>
+     
+
+```
+
+#### settings.xml
+
+
+
+```xml
+
+
+<settings>
+    <servers>
+        <server>
+            <!-- you can actually put the key and secret in here, I like to get them from the env -->
+            <id>someId</id>
+            <username>${env.AWS_ACCESS_KEY}</username>
+            <passphrase>${env.AWS_SECRET_KEY}</passphrase>
+        </server>
+    <server>
+  </servers>
+</settings>
+
+```
+
+
 ## License
 
 Copyright © 2011-2012 Phil Hagelberg and Scott Clasen
