@@ -95,7 +95,7 @@ but is harmless.
             <!-- you can actually put the key and secret in here, I like to get them from the env -->
             <id>someId</id>
             <username>${env.AWS_ACCESS_KEY}</username>
-            <passphrase>${env.AWS_SECRET_KEY}</passphrase>
+            <password>${env.AWS_SECRET_KEY}</password>
         </server>
     <server>
   </servers>
