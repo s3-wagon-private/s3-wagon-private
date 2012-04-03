@@ -39,9 +39,25 @@ exist will cause an `org.jets3t.service.S3ServiceException` stack
 trace to be emitted; this is a bug in one of the underlying libraries
 but is harmless.
 
-###Maven 
+If you are running Leiningen in an environment where you don't control
+the user such as Heroku or Jenkins, you can define `leiningen-auth` in
+project.clj after the `defproject` form. However, you should avoid
+committing AWS credentials to your project, so you should take them
+from the environment using `System/getenv`:
 
-####pom.xml
+```clj
+(defproject my-project "1.0.0"
+  :plugins [[s3-wagon-private "1.1.1"]]
+  :repositories {"releases" "s3p://mybucket/releases/"})
+
+(def leiningen-auth {"s3p://mybucket/releases/"
+                     {:username (System/getenv "AWS_ACCESS_KEY")
+                      :passphrase (System/getenv "SECRET_KEY")}})
+```
+
+### Maven 
+
+#### pom.xml
 
 ```xml
      <build>
