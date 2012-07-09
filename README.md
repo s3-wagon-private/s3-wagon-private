@@ -12,7 +12,7 @@ but should be usable in other contexts by deploying to repositories at
 Add the plugin and repositories listing to `project.clj`:
 
 ```clj
-:plugins [[s3-wagon-private "1.1.1"]]
+:plugins [[s3-wagon-private "1.1.2"]]
 ```
 
 You can store credentials either in an encrypted file or as
@@ -55,7 +55,7 @@ Future versions should remove the need for this declaration.
 As above, add the plugin and repositories listing to `project.clj`:
 
 ```clj
-:plugins [[s3-wagon-private "1.1.1"]]
+:plugins [[s3-wagon-private "1.1.2"]]
 :repositories {"private" {:url "s3p://mybucket/releases/"}}
 ```
 
@@ -82,7 +82,7 @@ your project, so you should take them from the environment using
 
 ```clj
 (defproject my-project "1.0.0"
-  :plugins [[s3-wagon-private "1.1.1"]]
+  :plugins [[s3-wagon-private "1.1.2"]]
   :repositories {"releases" {:url "s3p://mybucket/releases/"
                              :username (System/getenv "AWS_ACCESS_KEY")
                              :passphrase (System/getenv "AWS_SECRET_KEY")}})
@@ -98,7 +98,7 @@ your project, so you should take them from the environment using
             <extension>
                 <groupId>s3-wagon-private</groupId>
                 <artifactId>s3-wagon-private</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
             </extension>
         </extensions>
     </build>
