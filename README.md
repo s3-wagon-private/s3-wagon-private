@@ -20,7 +20,7 @@ environment variables. For the encrypted file, add this to
 `project.clj`:
 
 ```clj
-:repositories {"private" {:url "s3p://mybucket/releases/" :creds :gpg}}
+:repositories [["private" {:url "s3p://mybucket/releases/" :creds :gpg}]]
 ```
 
 And in `~/.lein/credentials.clj.gpg`:
