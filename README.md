@@ -43,16 +43,6 @@ To use the environment for credentials, include
 
 See `lein help deploying` for details on storing credentials.
 
-Currently in Leiningen 2 you have to manually activate the plugin with
-the following form at the bottom of project.clj:
-
-```clj
-(cemerick.pomegranate.aether/register-wagon-factory!
- "s3p" #(eval '(org.springframework.aws.maven.PrivateS3Wagon.)))
- ```
-
-Future versions should remove the need for this declaration.
-
 ### Leiningen 1.x
 
 As above, add the plugin and repositories listing to `project.clj`:
