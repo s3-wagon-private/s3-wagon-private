@@ -30,6 +30,9 @@ And in `~/.lein/credentials.clj.gpg`:
                             :passphrase "98b0b104ca1211e19a6c"}}
 ```
 
+The username and passphrase here correspond to the AWS Access Key and Secret
+Key, respectively.
+
 The map key here can be either a string for an exact match or a regex
 checked against the repository URL if you have the same credentials
 for multiple repositories.
