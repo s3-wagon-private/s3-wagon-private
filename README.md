@@ -34,9 +34,9 @@ The map key here can be either a string for an exact match or a regex
 checked against the repository URL if you have the same credentials
 for multiple repositories.
 
-To use the environment for credentials, include `:creds :env` instead
-of `:creds :gpg` and export `LEIN_USERNAME` and `LEIN_PASSPHRASE`
-environment variables.
+To use the environment for credentials, include
+`:username :env :passphrase :env` instead of `:creds :gpg` and export
+`LEIN_USERNAME` and `LEIN_PASSPHRASE` environment variables.
 
 See `lein help deploying` for details on storing credentials.
 
@@ -88,7 +88,7 @@ your project, so you should take them from the environment using
                              :passphrase (System/getenv "AWS_SECRET_KEY")}})
 ```
 
-### Maven 
+### Maven
 
 #### pom.xml
 
@@ -102,9 +102,9 @@ your project, so you should take them from the environment using
             </extension>
         </extensions>
     </build>
-    
+
     <!-- to publish to a private bucket -->
-    
+
      <distributionManagement>
                 <repository>
                     <id>someId</id>
@@ -117,9 +117,9 @@ your project, so you should take them from the environment using
                     <url>s3p://some-bucket/snapshot</url>
                 </snapshotRepository>
      </distributionManagement>
-     
+
      <!-- to consume artifacts from a private bucket -->
-     
+
      <repositories>
         <repository>
             <id>someId</id>
@@ -127,7 +127,7 @@ your project, so you should take them from the environment using
             <url>s3p://some-bucket/release</url>
         </repository>
     </repositories>
-     
+
 
 ```
 
