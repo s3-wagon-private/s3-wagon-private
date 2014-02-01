@@ -144,10 +144,22 @@ your project, so you should take them from the environment using
 
 ```
 
+### Changes from version 1.1.2
+
+s3-wagon-private is now based on aws-maven 4.8.0-RELEASE, which now uses the
+official Amazon S3 client, rather than JetS3t. The list of IAM
+permissions required on your S3 bucket have changed, they now include:
+
+ - getBucketLocation
+ - listObjects
+ - getObject
+ - getObjectMetadata
+ - putObject (when deploying)
+
 
 ## License
 
-Copyright © 2011-2012 Phil Hagelberg and Scott Clasen
+Copyright © 2011-2013 Phil Hagelberg, Scott Clasen, Allen Rohner
 
 Based on [aws-maven](http://git.springsource.org/spring-build/aws-maven)
 from the Spring project.
