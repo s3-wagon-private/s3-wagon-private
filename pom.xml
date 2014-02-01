@@ -19,7 +19,7 @@
         <dependency>
             <groupId>org.springframework.build.aws</groupId>
             <artifactId>org.springframework.build.aws.maven</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>4.0.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.wagon</groupId>
