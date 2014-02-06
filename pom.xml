@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>circle</groupId>
-  <artifactId>s3-wagon-private</artifactId>
-  <version>1.2.1</version>
+    <groupId>circle</groupId>
+    <artifactId>s3-wagon-private</artifactId>
+    <version>1.2.0</version>
 
   <licenses>
     <license>
@@ -15,20 +15,32 @@
     </license>
   </licenses>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.build</groupId>
-      <artifactId>aws-maven</artifactId>
-      <version>4.8.0.RELEASE</version>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.build</groupId>
+            <artifactId>aws-maven</artifactId>
+            <version>4.8.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-provider-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-  <distributionManagement>
-    <repository>
-      <id>clojars</id>
-      <name>Clojars repository</name>
-      <url>https://clojars.org/repo</url>
-    </repository>
-  </distributionManagement>
-
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
 </project>
