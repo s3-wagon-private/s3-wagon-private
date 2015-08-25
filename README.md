@@ -12,7 +12,7 @@ but should be usable in other contexts by deploying to repositories at
 Add the plugin and repositories listing to `project.clj`:
 
 ```clj
-:plugins [[s3-wagon-private "1.1.2"]]
+:plugins [[s3-wagon-private "1.2.0"]]
 ```
 
 You can store credentials either in an encrypted file or as
@@ -48,7 +48,7 @@ See `lein help deploying` for details on storing credentials.
 As above, add the plugin and repositories listing to `project.clj`:
 
 ```clj
-:plugins [[s3-wagon-private "1.1.2"]]
+:plugins [[s3-wagon-private "1.2.0"]]
 :repositories {"private" {:url "s3p://mybucket/releases/"}}
 ```
 
@@ -75,7 +75,7 @@ your project, so you should take them from the environment using
 
 ```clj
 (defproject my-project "1.0.0"
-  :plugins [[s3-wagon-private "1.1.2"]]
+  :plugins [[s3-wagon-private "1.2.0"]]
   :repositories {"releases" {:url "s3p://mybucket/releases/"
                              :username (System/getenv "AWS_ACCESS_KEY")
                              :passphrase (System/getenv "AWS_SECRET_KEY")}})
@@ -91,7 +91,7 @@ your project, so you should take them from the environment using
             <extension>
                 <groupId>s3-wagon-private</groupId>
                 <artifactId>s3-wagon-private</artifactId>
-                <version>1.1.2</version>
+                <version>1.2.0</version>
             </extension>
         </extensions>
     </build>
@@ -144,7 +144,7 @@ your project, so you should take them from the environment using
 
 ```
 
-### Changes from version 1.1.2
+### Changes in version 1.2.0
 
 s3-wagon-private is now based on aws-maven 4.8.0-RELEASE, which now uses the
 official Amazon S3 client, rather than JetS3t. The list of IAM
