@@ -53,8 +53,8 @@ your project, so you should take them from the environment using
 (defproject my-project "1.0.0"
   :plugins [[s3-wagon-private "1.2.0"]]
   :repositories {"releases" {:url "s3p://mybucket/releases/"
-                             :username (System/getenv "AWS_ACCESS_KEY")
-                             :passphrase (System/getenv "AWS_SECRET_KEY")}})
+                             :username :env/aws_access_key ;; gets environment variable AWS_ACCESS_KEY
+                             :passphrase :env/aws_secret_key}}) ;; gets environment variable AWS_SECRET_KEY 
 ```
 
 ### Maven
