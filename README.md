@@ -131,6 +131,10 @@ permissions required on your S3 bucket have changed, they now include:
  - getObject
  - getObjectMetadata
  - putObject (when deploying)
+ 
+## Troubleshooting
+
+If you are seeing errors like: `java.lang.IllegalArgumentException: No matching ctor found for class org.sonatype.aether.repository.Authentication`, and you are using [lein-npm](https://github.com/RyanMcG/lein-npm), try upgrading to version `0.5.1` or later. It contains fixes for [an issue](https://github.com/RyanMcG/lein-npm/pull/13) when using keyword sourced environment variables in your `:repositories`.
 
 
 ## License
