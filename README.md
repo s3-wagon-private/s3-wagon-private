@@ -43,30 +43,6 @@ To use the environment for credentials, include
 
 See `lein help deploying` for details on storing credentials.
 
-### Leiningen 1.x
-
-As above, add the plugin and repositories listing to `project.clj`:
-
-```clj
-:plugins [[s3-wagon-private "1.2.0"]]
-:repositories {"private" {:url "s3p://mybucket/releases/"}}
-```
-
-On 1.x you keep S3 credentials in `~/.lein/init.clj`:
-
-```clj
-(def leiningen-auth {"s3p://mybucket/releases/"
-                     {:username "ACCESS_KEY"
-                      :passphrase "SECRET_KEY"}
-                     "s3p://mybucket/snapshots/"
-                     {:username "ACCESS_KEY"
-                      :passphrase "SECRET_KEY"}})
-```
-
-Note that deploying an artifact that doesn't already exist will cause
-an `org.jets3t.service.S3ServiceException` stack trace to be emitted;
-this is a bug in one of the underlying libraries but is harmless.
-
 If you are running Leiningen in an environment where you don't control
 the user such as Heroku or Jenkins, you can include credentials in the
 `:repositories` entry. However, you should avoid committing them to
