@@ -54,7 +54,7 @@ your project, so you should take them from the environment using
   :plugins [[s3-wagon-private "1.2.0"]]
   :repositories {"releases" {:url "s3p://mybucket/releases/"
                              :username :env/aws_access_key ;; gets environment variable AWS_ACCESS_KEY
-                             :passphrase :env/aws_secret_key}}) ;; gets environment variable AWS_SECRET_KEY 
+                             :passphrase :env/aws_secret_key}}) ;; gets environment variable AWS_SECRET_KEY
 ```
 
 ### Maven
@@ -131,7 +131,34 @@ permissions required on your S3 bucket have changed, they now include:
  - getObject
  - getObjectMetadata
  - putObject (when deploying)
- 
+
+Here's a sample AWS policy that would allow both read and write access to
+the bucket `mybucket`:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "StmtXXXXX",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:GetObjectVersion",
+                "s3:ListBucket",
+                "s3:ListObjects",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::mybucket",
+                "arn:aws:s3:::mybucket/*"
+            ]
+        }
+    ]
+}
+```
+
 ## Troubleshooting
 
 If you are seeing errors like: `java.lang.IllegalArgumentException: No matching ctor found for class org.sonatype.aether.repository.Authentication`, and you are using [lein-npm](https://github.com/RyanMcG/lein-npm), try upgrading to version `0.5.1` or later. It contains fixes for [an issue](https://github.com/RyanMcG/lein-npm/pull/13) when using keyword sourced environment variables in your `:repositories`.
