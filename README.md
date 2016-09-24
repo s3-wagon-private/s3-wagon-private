@@ -89,6 +89,14 @@ your project, so you should take them from the environment using
 
      <!-- to consume artifacts from a private bucket -->
 
+     <pluginRepositories>
+       <pluginRepository>
+         <id>clojars.org</id>
+         <name>Clojars Repository</name>
+         <url>http://clojars.org/repo</url>
+       </pluginRepository>
+     </pluginRepositories>
+
      <repositories>
         <repository>
             <id>someId</id>
@@ -113,6 +121,7 @@ your project, so you should take them from the environment using
             <!-- you can actually put the key and secret in here, I like to get them from the env -->
             <id>someId</id>
             <username>${env.AWS_ACCESS_KEY}</username>
+            <privateKey>${user.home}/.ssh/id_rsa</privateKey>
             <passphrase>${env.AWS_SECRET_KEY}</passphrase>
         </server>
     </servers>
