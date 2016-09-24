@@ -3,8 +3,7 @@
         <component>
             <role>org.apache.maven.wagon.Wagon</role>
             <role-hint>s3p</role-hint>
-            <implementation>org.springframework.aws.maven.PrivateS3Wagon</implementation>
-            <!-- <implementation>org.springframework.aws.maven.SimpleStorageServiceWagon</implementation> -->
+            <implementation>org.springframework.build.aws.maven.PrivateS3Wagon</implementation>
             <instantiation-strategy>per-lookup</instantiation-strategy>
         </component>
     </components>
