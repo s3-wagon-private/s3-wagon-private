@@ -38,6 +38,7 @@ import org.apache.maven.wagon.repository.Repository;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.internal.Mimetypes;
@@ -88,14 +89,19 @@ public final class PrivateS3Wagon extends AbstractWagon {
     protected void connectToRepository(Repository repository, AuthenticationInfo authenticationInfo, ProxyInfoProvider proxyInfoProvider)
         throws AuthenticationException {
         if (this.amazonS3 == null) {
-            AWSCredentials awsCredentials = authenticationInfo == null ? null : new AuthenticationInfoAWSCredentials(authenticationInfo);
             ClientConfiguration clientConfiguration = S3Utils.getClientConfiguration(proxyInfoProvider);
 
 
             this.bucketName = S3Utils.getBucketName(repository);
             this.baseDirectory = S3Utils.getBaseDirectory(repository);
 
-            this.amazonS3 = new AmazonS3Client(awsCredentials, clientConfiguration);
+            if (authenticationInfo == null) {
+                this.amazonS3 = new AmazonS3Client(new DefaultAWSCredentialsProviderChain(), clientConfiguration);
+            } else {
+                AWSCredentials awsCredentials = new AuthenticationInfoAWSCredentials(authenticationInfo);
+                this.amazonS3 = new AmazonS3Client(awsCredentials, clientConfiguration);
+            }
+
             Region region = Region.fromLocationConstraint(this.amazonS3.getBucketLocation(this.bucketName));
             this.amazonS3.setEndpoint(region.getEndpoint());
         }
