@@ -47,6 +47,12 @@
             <groupId>org.springframework.build</groupId>
             <artifactId>aws-maven</artifactId>
             <version>4.8.0.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.amazonaws</groupId>
+                    <artifactId>aws-java-sdk</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
