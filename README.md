@@ -176,6 +176,16 @@ the bucket `mybucket`:
 If you are seeing errors like: `java.lang.IllegalArgumentException: No matching ctor found for class org.sonatype.aether.repository.Authentication`, and you are using [lein-npm](https://github.com/RyanMcG/lein-npm), try upgrading to version `0.5.1` or later. It contains fixes for [an issue](https://github.com/RyanMcG/lein-npm/pull/13) when using keyword sourced environment variables in your `:repositories`.
 
 
+## Releasing this library
+
+```
+# Make sure all of the versions are as you want them
+git tag v1.x.y
+git push --tags
+mvn deploy
+# Bump to the next SNAPSHOT version
+```
+
 ## License
 
 Copyright © 2011-2013 Phil Hagelberg, Scott Clasen, Allen Rohner
