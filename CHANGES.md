@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased (1.3.1?)]
+
+
 ## [1.3.0] - 2017-01-31
 
 This is a major upgrade that adds support for the AWS SDK provider chain. There is the possibility that this new version won't be compatible with your tooling, due to classpath issues with Jackson. If this is the case, please open an issue and we will try to fix it.
