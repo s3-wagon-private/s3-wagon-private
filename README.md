@@ -80,7 +80,7 @@ See `lein help deploying` for additional details on storing credentials.
             <extension>
                 <groupId>s3-wagon-private</groupId>
                 <artifactId>s3-wagon-private</artifactId>
-                <version>1.3.0-alpha2</version>
+                <version>1.3.0</version>
             </extension>
         </extensions>
     </build>
