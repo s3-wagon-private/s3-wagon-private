@@ -9,7 +9,9 @@ but should be usable in other contexts by deploying to repositories at
 
 ### Leiningen 2.x
 
-Add the plugin and repositories listing to `project.clj`. **NB: You need to add these to your `project.clj`, not your personal `~/.lein/profiles.clj`. For more details on why, see Leiningen's doc on [repeatability](https://github.com/technomancy/leiningen/wiki/Repeatability#user-level-repositories)**:
+Add the plugin and repositories listing to `project.clj`.
+
+**NB: You need to add these to your `project.clj`, not your personal `~/.lein/profiles.clj`. For more details on why, see Leiningen's doc on [repeatability](https://github.com/technomancy/leiningen/wiki/Repeatability#user-level-repositories)**:
 
 ```clj
 :plugins [[s3-wagon-private "1.3.0-alpha2"]]
