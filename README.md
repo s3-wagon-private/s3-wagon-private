@@ -12,50 +12,46 @@ but should be usable in other contexts by deploying to repositories at
 Add the plugin and repositories listing to `project.clj`. **NB: You need to add these to your `project.clj`, not your personal `~/.lein/profiles.clj`. For more details on why, see Leiningen's doc on [repeatability](https://github.com/technomancy/leiningen/wiki/Repeatability#user-level-repositories)**:
 
 ```clj
-:plugins [[s3-wagon-private "1.2.0"]]
+:plugins [[s3-wagon-private "1.3.0-alpha2"]]
 ```
 
-You can store credentials either in an encrypted file or as
-environment variables. For the encrypted file, add this to
-`project.clj`:
+To authenticate to the S3 bucket, you can either use any of the AWS SDK credential providers or store credentials in an encrypted file.
 
-```clj
-:repositories [["private" {:url "s3p://mybucket/releases/" :creds :gpg}]]
-```
+- Using one of the AWS SDK [chained provider class][chained-provider-class] credential providers:
 
-And in `~/.lein/credentials.clj.gpg`:
+     Add the following to `project.clj`:
 
-```
-{"s3p://mybucket/releases" {:username "AKIA2489AE28488"
-                            :passphrase "98b0b104ca1211e19a6c"}}
-```
+     ```clj
+     :repositories [["private" {:url "s3p://mybucket/releases/" :no-auth true}]]
+     ```
 
-The username and passphrase here correspond to the AWS Access Key and Secret
-Key, respectively.
+     An excerpt of the most commonly used credential providers:
+     - Environment Variables - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+     - Java System Properties - `aws.accessKeyId` and `aws.secretKey`
+     - Credential profiles file at the default location (~/.aws/credentials) with the [AWS Credentials File Format][credentials-file-format]. To use a particular profile, specify the env var `AWS_PROFILE` or a Java system property of `aws.profile`, otherwise, the fallback will be the default profile name (`"default"`)
+     - Instance profile credentials delivered through the Amazon EC2 metadata service
 
-The map key here can be either a string for an exact match or a regex
-checked against the repository URL if you have the same credentials
-for multiple repositories.
+- Store credentials in an encrypted file
 
-To use the environment for credentials, include
-`:username :env :passphrase :env` instead of `:creds :gpg` and export
-`LEIN_USERNAME` and `LEIN_PASSPHRASE` environment variables.
+    Add the following to `project.clj`:
 
-See `lein help deploying` for details on storing credentials.
+    ```clj
+    :repositories [["private" {:url "s3p://mybucket/releases/" :creds :gpg}]]
+    ```
 
-If you are running Leiningen in an environment where you don't control
-the user such as Heroku or Jenkins, you can include credentials in the
-`:repositories` entry. However, you should avoid committing them to
-your project, so you should take them from the environment using
-`System/getenv`:
+    And in `~/.lein/credentials.clj.gpg`:
 
-```clj
-(defproject my-project "1.0.0"
-  :plugins [[s3-wagon-private "1.2.0"]]
-  :repositories {"releases" {:url "s3p://mybucket/releases/"
-                             :username :env/aws_access_key ;; gets environment variable AWS_ACCESS_KEY
-                             :passphrase :env/aws_secret_key}}) ;; gets environment variable AWS_SECRET_KEY
-```
+    ```
+     {"s3p://mybucket/releases" {:username "AKIA2489AE28488" ;; AWS Access Key
+                                 :passphrase "98b0b104ca1211e19a6c" ;; AWS Secret Key
+                                 }}
+    ```
+
+    The map key here can be either a string for an exact match or a regex
+    checked against the repository URL if you have the same credentials
+    for multiple repositories.
+
+    See `lein help deploying` for additional details on storing credentials.
 
 ### Maven
 
@@ -67,7 +63,7 @@ your project, so you should take them from the environment using
             <extension>
                 <groupId>s3-wagon-private</groupId>
                 <artifactId>s3-wagon-private</artifactId>
-                <version>1.2.0</version>
+                <version>1.3.0-alpha2</version>
             </extension>
         </extensions>
     </build>
@@ -110,7 +106,7 @@ your project, so you should take them from the environment using
 
 #### settings.xml
 
-
+This xml is only necessary if not using one of the AWS SDK [chained provider class][chained-provider-class] methods of authentication.
 
 ```xml
 
@@ -181,3 +177,6 @@ Based on [aws-maven](http://git.springsource.org/spring-build/aws-maven)
 from the Spring project.
 
 Distributed under the Apache Public License version 2.0.
+
+[chained-provider-class]: http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/DefaultAWSCredentialsProviderChain.html
+[credentials-file-format]: http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#aws-credentials-file-format
