@@ -15,43 +15,58 @@ Add the plugin and repositories listing to `project.clj`. **NB: You need to add 
 :plugins [[s3-wagon-private "1.3.0-alpha2"]]
 ```
 
-To authenticate to the S3 bucket, you can either use any of the AWS SDK credential providers or store credentials in an encrypted file.
+To authenticate to the S3 bucket, you can either use any of the AWS SDK credential providers, store credentials in an encrypted file, or store your credentials in arbitrary environment variables.
 
-- Using one of the AWS SDK [chained provider class][chained-provider-class] credential providers:
+#### AWS credential providers
 
-     Add the following to `project.clj`:
+Using one of the AWS SDK [chained provider class][chained-provider-class] credential providers:
 
-     ```clj
-     :repositories [["private" {:url "s3p://mybucket/releases/" :no-auth true}]]
-     ```
+Add the following to `project.clj`:
 
-     An excerpt of the most commonly used credential providers:
-     - Environment Variables - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-     - Java System Properties - `aws.accessKeyId` and `aws.secretKey`
-     - Credential profiles file at the default location (~/.aws/credentials) with the [AWS Credentials File Format][credentials-file-format]. To use a particular profile, specify the env var `AWS_PROFILE` or a Java system property of `aws.profile`, otherwise, the fallback will be the default profile name (`"default"`)
-     - Instance profile credentials delivered through the Amazon EC2 metadata service
+ ```clj
+ :repositories [["private" {:url "s3p://mybucket/releases/" :no-auth true}]]
+ ```
 
-- Store credentials in an encrypted file
+ An excerpt of the most commonly used credential providers:
+ - Environment Variables - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+ - Java System Properties - `aws.accessKeyId` and `aws.secretKey`
+ - Credential profiles file at the default location (~/.aws/credentials) with the [AWS Credentials File Format][credentials-file-format]. To use a particular profile, specify the env var `AWS_PROFILE` or a Java system property of `aws.profile`, otherwise, the fallback will be the default profile name (`"default"`)
+ - Instance profile credentials delivered through the Amazon EC2 metadata service
 
-    Add the following to `project.clj`:
 
-    ```clj
-    :repositories [["private" {:url "s3p://mybucket/releases/" :creds :gpg}]]
-    ```
+#### Store credentials in an encrypted file
 
-    And in `~/.lein/credentials.clj.gpg`:
+Add the following to `project.clj`:
 
-    ```
-     {"s3p://mybucket/releases" {:username "AKIA2489AE28488" ;; AWS Access Key
-                                 :passphrase "98b0b104ca1211e19a6c" ;; AWS Secret Key
-                                 }}
-    ```
+```clj
+:repositories [["private" {:url "s3p://mybucket/releases/" :creds :gpg}]]
+```
 
-    The map key here can be either a string for an exact match or a regex
-    checked against the repository URL if you have the same credentials
-    for multiple repositories.
+And in `~/.lein/credentials.clj.gpg`:
 
-    See `lein help deploying` for additional details on storing credentials.
+```
+ {"s3p://mybucket/releases" {:username "AKIA2489AE28488" ;; AWS Access Key
+                             :passphrase "98b0b104ca1211e19a6c" ;; AWS Secret Key
+                             }}
+```
+
+The map key here can be either a string for an exact match or a regex
+checked against the repository URL if you have the same credentials
+for multiple repositories.
+
+See `lein help deploying` for additional details on storing credentials.
+
+#### Store credentials under arbitrary environment variables
+
+```clj
+:repositories {"releases"  {:url "s3p://my-maven/releases/"
+                            :username      :env/my_cool_aws_access_key_id
+                            :passphrase    :env/my_cool_aws_secret_access_key
+                            :sign-releases false}
+               "snapshots" {:url           "s3p://my-maven/snapshots/"
+                            :username      :env/my_cool_aws_access_key_id
+                            :passphrase    :env/my_cool_aws_secret_access_key}}
+```
 
 ### Maven
 
@@ -125,17 +140,7 @@ This xml is only necessary if not using one of the AWS SDK [chained provider cla
 
 ```
 
-### Changes in version 1.2.0
-
-s3-wagon-private is now based on aws-maven 4.8.0-RELEASE, which now uses the
-official Amazon S3 client, rather than JetS3t. The list of IAM
-permissions required on your S3 bucket have changed, they now include:
-
- - getBucketLocation
- - listObjects
- - getObject
- - getObjectMetadata
- - putObject (when deploying)
+#### AWS Policy
 
 Here's a sample AWS policy that would allow both read and write access to
 the bucket `mybucket`:
