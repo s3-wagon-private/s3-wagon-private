@@ -8,3 +8,6 @@ target
 /.lein-failures
 /checkouts
 /.lein-deps-sum
+.classpath
+.settings
+.project
