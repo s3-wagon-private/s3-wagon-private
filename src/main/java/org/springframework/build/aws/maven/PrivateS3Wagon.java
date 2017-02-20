@@ -35,14 +35,16 @@ import org.apache.maven.wagon.authentication.AuthenticationInfo;
 import org.apache.maven.wagon.proxy.ProxyInfoProvider;
 import org.apache.maven.wagon.repository.Repository;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.regions.DefaultAwsRegionProviderChain;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.internal.Mimetypes;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -102,11 +104,34 @@ public final class PrivateS3Wagon extends AbstractWagon {
                 this.amazonS3 = new AmazonS3Client(awsCredentials, clientConfiguration);
             }
 
-            Region region = Region.fromLocationConstraint(this.amazonS3.getBucketLocation(this.bucketName));
-            this.amazonS3.setEndpoint(region.getEndpoint());
+            try {
+                com.amazonaws.regions.Region region = parseRegion(new DefaultAwsRegionProviderChain().getRegion());
+                if (!region.getPartition().equals("aws")) {
+                    this.amazonS3.setRegion(region);
+                } else {
+                    detectEndpointFromBucket();
+                }
+            } catch (AmazonClientException e) {
+                detectEndpointFromBucket();
+            }
         }
     }
 
+    private void detectEndpointFromBucket() {
+        String location = this.amazonS3.getBucketLocation(this.bucketName);
+
+        try {
+            Region region = Region.fromLocationConstraint(this.amazonS3.getBucketLocation(this.bucketName));
+            this.amazonS3.setEndpoint(region.getEndpoint());
+        } catch (IllegalArgumentException e) {
+            this.amazonS3.setRegion(parseRegion(location));
+        }
+    }
+
+    private com.amazonaws.regions.Region parseRegion(String region) {
+        return com.amazonaws.regions.Region.getRegion(Regions.fromName(region));
+    }
+    
     @Override
     protected void disconnectFromRepository() {
         this.amazonS3 = null;
