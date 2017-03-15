@@ -216,8 +216,6 @@ public final class PrivateS3Wagon extends AbstractWagon {
         ResourceDoesNotExistException {
         String key = getKey(destination);
 
-        mkdirs(key, 0);
-
         InputStream in = null;
         try {
             ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -264,32 +262,6 @@ public final class PrivateS3Wagon extends AbstractWagon {
             return matcher.group(1);
         }
         return key;
-    }
-
-    private void mkdirs(String path, int index) throws TransferFailedException {
-        int directoryIndex = path.indexOf('/', index) + 1;
-
-        if (directoryIndex != 0) {
-            String directory = path.substring(0, directoryIndex);
-            PutObjectRequest putObjectRequest = createDirectoryPutObjectRequest(directory);
-
-            try {
-                this.amazonS3.putObject(putObjectRequest);
-            } catch (AmazonServiceException e) {
-                throw new TransferFailedException(String.format("Cannot write directory '%s'", directory), e);
-            }
-
-            mkdirs(path, directoryIndex);
-        }
-    }
-
-    private PutObjectRequest createDirectoryPutObjectRequest(String key) {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
-
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(0);
-
-        return new PutObjectRequest(this.bucketName, key, inputStream, objectMetadata);
     }
 
 }
