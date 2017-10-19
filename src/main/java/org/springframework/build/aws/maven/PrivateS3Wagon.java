@@ -102,7 +102,8 @@ public final class PrivateS3Wagon extends AbstractWagon {
             } else if (authenticationInfo.getUserName() == null &&
                        authenticationInfo.getPassword() == null &&
                        authenticationInfo.getPassphrase() == null &&
-                       authenticationInfo.getPrivateKey() == "") {
+                       (authenticationInfo.getPrivateKey() == null ||
+                        authenticationInfo.getPrivateKey().equals(""))) {
                 default_cred_provider = true;
             }
 
