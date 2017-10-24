@@ -96,18 +96,18 @@ public final class PrivateS3Wagon extends AbstractWagon {
             this.baseDirectory = S3Utils.getBaseDirectory(repository);
 
             // if AuthenticationInfo is null or empty, use the default provider from AWS SDK
-            boolean default_cred_provider = false;
+            boolean defaultCredProvider = false;
             if (authenticationInfo == null) {
-                default_cred_provider = true;
+                defaultCredProvider = true;
             } else if (authenticationInfo.getUserName() == null &&
                        authenticationInfo.getPassword() == null &&
                        authenticationInfo.getPassphrase() == null &&
                        (authenticationInfo.getPrivateKey() == null ||
                         authenticationInfo.getPrivateKey().equals(""))) {
-                default_cred_provider = true;
+                defaultCredProvider = true;
             }
 
-            if (default_cred_provider) {
+            if (defaultCredProvider) {
                 this.amazonS3 = new AmazonS3Client(new DefaultAWSCredentialsProviderChain(), clientConfiguration);
             } else {
                 AWSCredentials awsCredentials = new AuthenticationInfoAWSCredentials(authenticationInfo);
