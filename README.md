@@ -152,18 +152,26 @@ the bucket `mybucket`:
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "StmtXXXXX",
+            "Sid": "S3WagonPrivateAllowConfiguration",
             "Effect": "Allow",
             "Action": [
-                "s3:GetBucketLocation",
+              "s3:ListBucket",
+              "s3:GetBucketLocation"              
+            ],
+            "Resource": [
+              "arn:aws:s3:::mybucket"
+            ]
+        },
+        {
+            "Sid": "S3WagonPrivateAllowGetAndPut",
+            "Effect": "Allow",
+            "Action": [
                 "s3:GetObject",
                 "s3:GetObjectVersion",
                 "s3:ListBucket",
-                "s3:ListObjects",
                 "s3:PutObject"
             ],
             "Resource": [
-                "arn:aws:s3:::mybucket",
                 "arn:aws:s3:::mybucket/*"
             ]
         }
