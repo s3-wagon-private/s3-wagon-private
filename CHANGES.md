@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased (1.3.1?)]
+## [1.3.1]
 
-Removes unnecessary creation of bucket prefixes in S3. This gives users the ability to narrow the scope AWS Permissions for artifact uploads. 
+* Removes unnecessary creation of bucket prefixes in S3. This gives users the ability to narrow the scope AWS Permissions for artifact uploads.
+* Adds support for Leiningen 2.8.0 and up 
 
 ## [1.3.0] - 2017-01-31
 
