@@ -5,6 +5,8 @@ be used from [Leiningen](https://github.com/technomancy/leiningen),
 but should be usable in other contexts by deploying to repositories at
 "s3p://" URLs.
 
+> **Note: If this is all too much hassle for you, take a look at [Deps](https://www.deps.co), a simple, private, native Maven repository service that the maintainer also runs.**
+
 ## Usage
 
 ### Leiningen 2.x
