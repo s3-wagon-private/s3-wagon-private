@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.2]
+
+* Bump Jackson dependencies to match AWS versions.
+* Bump AWS dependency to avoid `java.lang.ClassNotFoundException: javax.xml.bind.JAXBException` issues with Java 10.
+
 ## [1.3.1]
 
 * Removes unnecessary creation of bucket prefixes in S3. This gives users the ability to narrow the scope AWS Permissions for artifact uploads.
