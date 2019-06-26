@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.3.3]
 
+### Changed
+
 * Add aws-java-sdk-sts to support AWS STS AssumeRole
+* Updated AWS SDK to 1.11.579 [#73](https://github.com/s3-wagon-private/s3-wagon-private/pull/73)
+* Updated Jackson dependencies to 2.9.9 [#65](https://github.com/s3-wagon-private/s3-wagon-private/pull/65)
+
 
 ## [1.3.2]
 
