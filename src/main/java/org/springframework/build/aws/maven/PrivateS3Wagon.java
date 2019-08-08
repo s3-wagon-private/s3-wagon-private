@@ -58,7 +58,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
  * <code>s3://static.springframework.org</code> would put files into the <code>static.springframework.org</code> bucket
  * on the S3 service.
  * <p/>
- * This implementation uses the <code>username</code> and <code>passphrase</code> portions of the server authentication
+ * This implementation uses the <code>username</code> and <code>password</code> portions of the server authentication
  * metadata for credentials.
  */
 public final class PrivateS3Wagon extends AbstractWagon {
@@ -102,10 +102,7 @@ public final class PrivateS3Wagon extends AbstractWagon {
             if (authenticationInfo == null) {
                 defaultCredProvider = true;
             } else if (authenticationInfo.getUserName() == null &&
-                       authenticationInfo.getPassword() == null &&
-                       authenticationInfo.getPassphrase() == null &&
-                       (authenticationInfo.getPrivateKey() == null ||
-                        authenticationInfo.getPrivateKey().equals(""))) {
+                       authenticationInfo.getPassword() == null) {
                 defaultCredProvider = true;
             }
 
@@ -143,7 +140,7 @@ public final class PrivateS3Wagon extends AbstractWagon {
     private com.amazonaws.regions.Region parseRegion(String region) {
         return com.amazonaws.regions.Region.getRegion(Regions.fromName(region));
     }
-    
+
     @Override
     protected void disconnectFromRepository() {
         this.amazonS3 = null;
