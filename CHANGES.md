@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0
+
+### Breaking changes
+
+* Version 2.0.0 is a breaking change **and is released under `s3-wagon-private/s3-wagon-private2`**. It entirely removes support for using `:passphrase` to pass the AWS Secret Key and instead uses `:password`. This has been a big source of confusion for people and caused several downstream problems. See [#31](https://github.com/s3-wagon-private/s3-wagon-private/issues/31) and [#47](https://github.com/s3-wagon-private/s3-wagon-private/issues/47) for more details.
+
+  You can continue to use the version 1 series without problem, and they will continue to receive bugfix updates in the `version1` branch.
+ 
+  If you wish to migrate to version 2, upgrade your dependency to `s3-wagon-private/s3-wagon-private2 "2.0.0"` and update your config from:
+
+    
+   ```clj
+   :repositories {"releases"  {:url           "s3p://my-maven/releases/"
+                               :username      :env/my_cool_aws_access_key_id
+                               :passphrase    :env/my_cool_aws_secret_access_key
+                               :sign-releases false}}
+   ```
+   
+   to:
+
+   ```clj
+   :repositories {"releases"  {:url           "s3p://my-maven/releases/"
+                               :username      :env/my_cool_aws_access_key_id
+                               :password      :env/my_cool_aws_secret_access_key
+                               :sign-releases false}}
+   ```
+
+
 ## [1.3.3]
 
 ### Changed

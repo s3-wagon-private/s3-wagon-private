@@ -16,7 +16,7 @@ Add the plugin and repositories listing to `project.clj`.
 **NB: You need to add these to your `project.clj`, not your personal `~/.lein/profiles.clj`. For more details on why, see Leiningen's doc on [repeatability](https://github.com/technomancy/leiningen/wiki/Repeatability#user-level-repositories)**:
 
 ```clj
-:plugins [[s3-wagon-private "1.3.1"]]
+:plugins [[s3-wagon-private/s3-wagon-private2 "2.0.0"]]
 ```
 
 To authenticate to the S3 bucket, you can either use any of the AWS SDK credential providers, store credentials in an encrypted file, or store your credentials in arbitrary environment variables.
@@ -48,13 +48,26 @@ Add the following to `project.clj`:
 
 And in `~/.lein/credentials.clj.gpg`:
 
+**Versions 2.0.0 and above (s3-wagon-private2)**
+
+```
+ {"s3p://mybucket/releases" {:username "AKIA2489AE28488" ;; AWS Access Key
+                             :password "98b0b104ca1211e19a6c" ;; AWS Secret Key
+                             }}
+```
+
+
+**Versions below 2.0.0 (s3-wagon-private)**
+
+Note that this uses `:passphrase` instead of `:password`.
+
 ```
  {"s3p://mybucket/releases" {:username "AKIA2489AE28488" ;; AWS Access Key
                              :passphrase "98b0b104ca1211e19a6c" ;; AWS Secret Key
                              }}
 ```
 
-The map key here can be either a string for an exact match or a regex
+The map key (`"s3p://mybucket/releases"` in the example) can be either a string for an exact match or a regex
 checked against the repository URL if you have the same credentials
 for multiple repositories.
 
@@ -62,8 +75,24 @@ See `lein help deploying` for additional details on storing credentials.
 
 #### Store credentials under arbitrary environment variables
 
+**Versions 2.0.0 and above (s3-wagon-private2)**
+
 ```clj
-:repositories {"releases"  {:url "s3p://my-maven/releases/"
+:repositories {"releases"  {:url           "s3p://my-maven/releases/"
+                            :username      :env/my_cool_aws_access_key_id
+                            :password      :env/my_cool_aws_secret_access_key
+                            :sign-releases false}
+               "snapshots" {:url           "s3p://my-maven/snapshots/"
+                            :username      :env/my_cool_aws_access_key_id
+                            :password      :env/my_cool_aws_secret_access_key}}
+```
+
+**Versions below 2.0.0 (s3-wagon-private)**
+
+Note that this uses `:passphrase` instead of `:password`.
+
+```clj
+:repositories {"releases"  {:url           "s3p://my-maven/releases/"
                             :username      :env/my_cool_aws_access_key_id
                             :passphrase    :env/my_cool_aws_secret_access_key
                             :sign-releases false}
@@ -127,21 +156,38 @@ See `lein help deploying` for additional details on storing credentials.
 
 This xml is only necessary if not using one of the AWS SDK [chained provider class][chained-provider-class] methods of authentication.
 
+**Versions 2.0.0 and above (s3-wagon-private2)**
+
 ```xml
-
-
 <settings>
     <servers>
         <server>
             <!-- you can actually put the key and secret in here, I like to get them from the env -->
             <id>someId</id>
             <username>${env.AWS_ACCESS_KEY}</username>
-            <privateKey>${user.home}/.ssh/id_rsa</privateKey>
+            <password>${env.AWS_SECRET_KEY}</privateKey>
+        </server>
+    </servers>
+</settings>
+```
+
+
+**Versions below 2.0.0 (s3-wagon-private)**
+
+Note that this uses `:passphrase` instead of `:password` and includes an arbitrary `privateKey` string to trigger the correct behaviour.
+
+```xml
+<settings>
+    <servers>
+        <server>
+            <!-- you can actually put the key and secret in here, I like to get them from the env -->
+            <id>someId</id>
+            <username>${env.AWS_ACCESS_KEY}</username>
+            <privateKey>none</privateKey>
             <passphrase>${env.AWS_SECRET_KEY}</passphrase>
         </server>
     </servers>
 </settings>
-
 ```
 
 #### AWS Policy
@@ -198,7 +244,7 @@ mvn deploy
 
 ## License
 
-Copyright © 2011-2013 Phil Hagelberg, Scott Clasen, Allen Rohner
+Copyright © 2011-2019 Phil Hagelberg, Scott Clasen, Allen Rohner, Daniel Compton
 
 Based on [aws-maven](http://git.springsource.org/spring-build/aws-maven)
 from the Spring project.
