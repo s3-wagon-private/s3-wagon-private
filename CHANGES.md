@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.3.3]
+## [1.3.3] - 2019-11-18
 
 ### Changed
 
@@ -13,15 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated Jackson dependencies to 2.9.9 [#65](https://github.com/s3-wagon-private/s3-wagon-private/pull/65)
 
 
-## [1.3.2]
+## [1.3.2] - 2018-05-30
 
 * Bump Jackson dependencies to match AWS versions.
 * Bump AWS dependency to avoid `java.lang.ClassNotFoundException: javax.xml.bind.JAXBException` issues with Java 10.
 
-## [1.3.1]
+## [1.3.1] - 2017-11-22
 
 * Removes unnecessary creation of bucket prefixes in S3. This gives users the ability to narrow the scope AWS Permissions for artifact uploads.
-* Adds support for Leiningen 2.8.0 and up 
+* Adds support for Leiningen 2.8.0 and up
 
 ## [1.3.0] - 2017-01-31
 
