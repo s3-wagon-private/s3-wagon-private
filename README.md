@@ -16,7 +16,7 @@ Add the plugin and repositories listing to `project.clj`.
 **NB: You need to add these to your `project.clj`, not your personal `~/.lein/profiles.clj`. For more details on why, see Leiningen's doc on [repeatability](https://github.com/technomancy/leiningen/wiki/Repeatability#user-level-repositories)**:
 
 ```clj
-:plugins [[s3-wagon-private "1.3.1"]]
+:plugins [[s3-wagon-private "1.3.3"]]
 ```
 
 To authenticate to the S3 bucket, you can either use any of the AWS SDK credential providers, store credentials in an encrypted file, or store your credentials in arbitrary environment variables.
