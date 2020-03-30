@@ -6,7 +6,7 @@
 
     <groupId>s3-wagon-private</groupId>
     <artifactId>s3-wagon-private</artifactId>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
     <description>Deploy and consume artifacts in private S3 repositories.</description>
     <url>https://github.com/technomancy/s3-wagon-private</url>
     <scm>
@@ -35,7 +35,7 @@
             <dependency>
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-bom</artifactId>
-                <version>1.11.580</version>
+                <version>1.11.713</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
