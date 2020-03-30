@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.4] - 2020-03-28
+
+### Changed
+
+* Updated AWS SDK to 1.11.713 [#78](https://github.com/s3-wagon-private/s3-wagon-private/pull/78)
+
 ## [1.3.3] - 2019-11-18
 
 ### Changed
