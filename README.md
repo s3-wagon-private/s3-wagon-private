@@ -144,7 +144,7 @@ This xml is only necessary if not using one of the AWS SDK [chained provider cla
 
 ```
 
-#### AWS Policy
+#### AWS Setup
 
 Here's a sample AWS policy that would allow both read and write access to
 the bucket `mybucket`:
@@ -170,7 +170,6 @@ the bucket `mybucket`:
             "Action": [
                 "s3:GetObject",
                 "s3:GetObjectVersion",
-                "s3:ListBucket",
                 "s3:PutObject"
             ],
             "Resource": [
@@ -179,6 +178,16 @@ the bucket `mybucket`:
         }
     ]
 }
+```
+You may also use the `cloudformation-template.yml` to set your S3 bucket up:
+
+```
+export UserArn=$(aws iam get-user --profile $AWS_PROFILE | jq -r '.User.Arn')
+aws cloudformation deploy \
+  --stack-name s3-maven-repo \
+  --template-file cloudformation-template.yml \
+  --parameter-overrides BucketName="s3-maven-repo" UserArn="${UserArn}"
+
 ```
 
 ## Troubleshooting

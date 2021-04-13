@@ -1,0 +1,59 @@
+Description: Creates a bucket to go with the s3-wagon-private
+Parameters:
+  UserArn:
+    Description: the ARN of your AWS user entity
+    Type: String
+  BucketName:
+    Description: The name of the bucket for your maven repo
+    Type: String
+    Default: MavenRepo
+    MinLength: 1
+    MaxLength: 64
+    AllowedPattern: ^[a-zA-Z0-9_-]*$
+
+Resources:
+  MavenRepoBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+    DeletionPolicy: Retain
+
+  MavenRepoBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref BucketName
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:ListBucket
+              - s3:GetBucketLocation
+            Resource:
+              - !Sub "arn:aws:s3:::${BucketName}"
+            Principal:
+              AWS:
+                - !Ref UserArn
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:GetObjectVersion
+              - s3:PutObject
+            Resource:
+              - !Sub "arn:aws:s3:::${BucketName}/*"
+            Principal:
+              AWS:
+                - !Ref UserArn
+
+Outputs:
+  MavenRepoBucketName:
+    Value: !Ref MavenRepoBucket
+    Description: The name of your maven repo bucket
+    Export:
+      Name: "MavenRepoBucketName"
+
+  MavenRepoBucketDomainName:
+    Value: !GetAtt MavenRepoBucket.DomainName
+    Description: The domain name of your maven repo bucket
+    Export:
+      Name: "MavenRepoBucketDomainName"
+
